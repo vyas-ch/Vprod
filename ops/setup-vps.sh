@@ -4,6 +4,10 @@ set -Eeuo pipefail
 umask 022
 
 if [[ $EUID -ne 0 ]]; then printf 'Beheerdersrechten nodig. Start via sudo.\n' >&2; exit 1; fi
+if [[ -e /etc/letsencrypt/live/vprod.nl/fullchain.pem ]]; then
+    printf 'HTTPS bestaat al. Gebruik deploy-vps.sh om TLS te behouden.\n' >&2
+    exit 1
+fi
 if [[ $# -ne 3 ]]; then printf 'Gebruik: setup-vps.sh ARCHIEF SHA256 GIT_COMMIT\n' >&2; exit 2; fi
 archive=$1
 expected_sha=$2

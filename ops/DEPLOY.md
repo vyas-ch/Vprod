@@ -18,6 +18,16 @@ De installatie verifieert het pakket, bewaart de vorige V Production-configurati
 
 ## Domeinen en HTTPS
 
-De meegeleverde configuratie biedt eerst HTTP. Zet de A-records van `vprod.nl` en `vproduction.nl` op het juiste VPS-adres; controleer ook de www-records en bestaande AAAA-records. Vraag daarna certificaten aan voor de bevestigde namen, activeer HTTPS en stuur `vproduction.nl` door naar `https://vprod.nl`. Beweer pas dat de site live is op HTTPS als de publieke controles slagen.
+De eerste configuratie biedt HTTP. Zet de A-records van `vprod.nl` en `vproduction.nl` op het juiste VPS-adres; controleer ook de www-records en bestaande AAAA-records. Op 30 september 2026 zijn beide A-records naar de VPS gezet en de oude AAAA-records verwijderd. De gebruiker bevestigde dat er nog geen e-mail in gebruik is. De overige DNS-records en DNSSEC zijn behouden.
 
-De projectplanner verstuurt zelf geen gegevens. Het publieke contactadres en de definitieve Higgsfield-video moeten nog worden ingevuld. Publiceer geen .env, sleutels, persoonlijke backups of lokale bronafbeeldingen.
+Gebruik voor de video, HTTPS en volgende releases:
+
+```sh
+sudo /bin/bash deploy-vps.sh release.tar SHA256 GIT_COMMIT VORIGE_GIT_COMMIT
+```
+
+Dit script stopt wanneer een andere release actief is dan verwacht, maakt een backup, controleert DNS en het ACME-pad en vraagt één Let's Encrypt-certificaat aan voor beide domeinen met en zonder www. Er wordt geen persoonlijk e-mailadres aan het certificaataccount gekoppeld. De hoofdpagina staat op `https://vprod.nl`; de overige namen en HTTP verwijzen daarheen. De automatische vernieuwing gebruikt Certbot, een timer en een Nginx-herlaadactie. Een proefvernieuwing en HTTPS-controles moeten slagen voordat de deploystatus wordt bijgewerkt. Bij een fout worden de vorige siteconfiguratie, release en status teruggezet; geïnstalleerde pakketten en verkregen certificaten blijven behouden.
+
+Gebruik `setup-vps.sh` alleen voor de eerste HTTP-installatie; het weigert bestaande certificaten te overschrijven. Controleer na iedere deploy ook publiek HTTPS, certificaatnamen, redirects, de videostream en de hashes van alle publieke bestanden. Lokale controles bewijzen nog geen publieke bereikbaarheid.
+
+De projectplanner verstuurt zelf geen gegevens. Het publieke contactadres moet nog worden ingevuld. De gecontroleerde Higgsfield-montage is opgenomen in de release. Publiceer geen .env, sleutels, persoonlijke backups of lokale bronafbeeldingen.

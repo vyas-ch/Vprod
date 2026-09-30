@@ -17,13 +17,13 @@ Preview: http://127.0.0.1:4173. De Node-server luistert standaard alleen lokaal.
 ## Content en video
 
 - Publieke contactgegevens staan in `public/site-config.js`. E-mailadres en telefoon zijn nog niet aangeleverd. De projectplanner maakt daarom nu een kopieerbaar concept. Er wordt niets automatisch verzonden.
-- `heroVideo` blijft leeg tot de Higgsfield-montage is gerenderd en gecontroleerd. Voeg het MP4-bestand toe onder `public/assets` en zet het lokale pad in de configuratie. De video speelt gedempt, heeft een pauzeknop en laadt pas op verzoek bij een klein scherm, databesparing of verminderde beweging.
-- De geplande montage toont radio, podcast, film, IT en websites. De huidige sfeerbeelden zijn met ImageGen gegenereerd; ze stellen geen bestaand klantportfolio of eigen studio voor.
+- De Higgsfield-montage in `public/assets/vprod-montage.mp4` toont radio, podcast, film, IT en websites (15 seconden, 1920×1080, 24 fps, zonder geluid). De webversie is circa 4 MB. De video heeft een pauzeknop en laadt pas op verzoek bij een klein scherm, databesparing of verminderde beweging.
+- De montage en sfeerbeelden zijn gegenereerd met Higgsfield en ImageGen. Ze stellen geen bestaand klantportfolio of eigen studio voor.
 - Het logo is overgenomen uit de goedgekeurde SVG-assets in navy/cyaan.
 - Primaire domeinkeuze: `vprod.nl`; `vproduction.nl` kan erheen doorverwijzen.
 
 ## Publicatie
 
-Nog niet live. Controleer vóór publicatie de contactgegevens, definitieve diensten, domeinverwijzingen en servertoegang. De repository bevat geen sleutels of omgevingsgeheimen. De statische server publiceert uitsluitend de map `public`.
+De eerste versie is op 30 september 2026 gepubliceerd als HTTP-preview op de VPS. De domeinen, HTTPS en publieke contactgegevens worden nog afgerond. De repository bevat geen sleutels of omgevingsgeheimen. De statische server publiceert uitsluitend de map `public`. De serverstatus en publieke controles bepalen welke commit daadwerkelijk draait.
 
 Zie `ops/DEPLOY.md` voor de voorbereide serveraanpak. Deploy alleen een geteste commit. Gebruik een aparte releasefolder, bewaar de vorige release en wijzig alleen de V Production-service.
