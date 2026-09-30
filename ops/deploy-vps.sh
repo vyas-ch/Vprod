@@ -93,7 +93,7 @@ fi
 token="vprod-preflight-$stamp"
 printf '%s' "$token" > "/var/lib/letsencrypt/.well-known/acme-challenge/$token"
 for domain in vprod.nl www.vprod.nl vproduction.nl www.vproduction.nl; do
-    [[ $(curl --fail --silent --show-error --connect-timeout 10 --max-time 20 "http://$domain/.well-known/acme-challenge/$token") == "$token" ]]
+    [[ $(curl --fail --silent --show-error --connect-timeout 10 --max-time 20 --retry 8 --retry-delay 1 --retry-all-errors "http://$domain/.well-known/acme-challenge/$token") == "$token" ]]
 done
 rm "/var/lib/letsencrypt/.well-known/acme-challenge/$token"
 
@@ -109,7 +109,7 @@ if command -v ufw >/dev/null && ufw status | grep -q '^Status: active'; then ufw
 systemctl reload nginx
 
 printf '4/5 HTTPS, doorverwijzingen en videostream controleren.\n'
-curl --fail --silent --show-error --resolve vprod.nl:443:127.0.0.1 https://vprod.nl/ -o "$backup/homepage.html"
+curl --fail --silent --show-error --retry 8 --retry-delay 1 --retry-all-errors --connect-timeout 10 --max-time 20 --resolve vprod.nl:443:127.0.0.1 https://vprod.nl/ -o "$backup/homepage.html"
 cmp "$backup/homepage.html" "$release/public/index.html"
 curl --fail --silent --show-error --resolve vprod.nl:443:127.0.0.1 https://vprod.nl/assets/vprod-montage.mp4 -o "$backup/video-check.mp4"
 cmp "$backup/video-check.mp4" "$release/public/assets/vprod-montage.mp4"
