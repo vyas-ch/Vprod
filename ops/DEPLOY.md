@@ -20,7 +20,7 @@ De installatie verifieert het pakket, bewaart de vorige V Production-configurati
 
 De eerste configuratie biedt HTTP. Zet de A-records van `vprod.nl` en `vproduction.nl` op het juiste VPS-adres; controleer ook de www-records en bestaande AAAA-records. Op 30 september 2026 zijn beide A-records naar de VPS gezet en de oude AAAA-records verwijderd. De gebruiker bevestigde dat er nog geen e-mail in gebruik is. De overige DNS-records en DNSSEC zijn behouden.
 
-Gebruik voor de video, HTTPS en volgende releases:
+De eenmalige HTTPS-installatie is op 30 september 2026 geslaagd, inclusief de proefvernieuwing. Normale website-updates gaan voortaan via GitHub. Alleen voor expliciete wijzigingen aan de serverconfiguratie is de beheerroute hieronder nodig; stop daarvoor eerst de deploytimer:
 
 ```sh
 sudo /bin/bash deploy-vps.sh release.tar SHA256 GIT_COMMIT VORIGE_GIT_COMMIT

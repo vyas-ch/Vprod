@@ -20,13 +20,13 @@ Preview: http://127.0.0.1:4173. De Node-server luistert standaard alleen lokaal.
 - De Higgsfield-montage in `public/assets/vprod-montage.mp4` toont radio, podcast, film, IT en websites (15 seconden, 1920×1080, 24 fps, zonder geluid). De webversie is circa 4 MB. De video heeft een pauzeknop en laadt pas op verzoek bij een klein scherm, databesparing of verminderde beweging.
 - De montage en sfeerbeelden zijn gegenereerd met Higgsfield en ImageGen. Ze stellen geen bestaand klantportfolio of eigen studio voor.
 - Het logo is overgenomen uit de goedgekeurde SVG-assets in navy/cyaan.
-- Primaire domeinkeuze: `vprod.nl`; `vproduction.nl` kan erheen doorverwijzen.
+- Hoofdadres: `https://vprod.nl`; `vproduction.nl` en beide www-adressen verwijzen hierheen.
 
 ## Publicatie
 
-De eerste versie is op 30 september 2026 gepubliceerd als HTTP-preview op de VPS. De domeinen, HTTPS en publieke contactgegevens worden nog afgerond. De repository bevat geen sleutels of omgevingsgeheimen. De statische server publiceert uitsluitend de map `public`. De serverstatus en publieke controles bepalen welke commit daadwerkelijk draait.
+De website met video is sinds 30 september 2026 bereikbaar via HTTPS. Nginx bedient de statische bestanden op de VPS; Let's Encrypt verzorgt het certificaat voor beide domeinen en hun www-adressen. De automatische certificaatvernieuwing is met een proefvernieuwing gecontroleerd. Publieke contactgegevens moeten nog worden ingevuld. De repository bevat geen sleutels of omgevingsgeheimen. Alleen de map `public` wordt gepubliceerd. De serverstatus en publieke controles bepalen welke commit daadwerkelijk draait.
 
-Zie `ops/DEPLOY.md` voor de voorbereide serveraanpak. Deploy alleen een geteste commit. Gebruik een aparte releasefolder, bewaar de vorige release en wijzig alleen de V Production-service.
+Normale updates verlopen via GitHub. Zie `ops/DEPLOY.md` voor de geïnstalleerde deployservice, controles en serverbeheer.
 
 ## Automatische updates
 
