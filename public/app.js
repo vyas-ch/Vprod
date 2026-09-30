@@ -9,8 +9,9 @@ if (heroVideo && videoToggle && /^\/assets\/[a-zA-Z0-9._-]+\.mp4$/.test(rootConf
   const automatic = () => !reduceMotion.matches && !navigator.connection?.saveData;
   const updateButton = () => {
     const playing = !heroVideo.paused;
-    videoToggle.querySelector('span:first-child').textContent = playing ? 'Ⅱ' : '▶';
-    videoToggle.querySelector('span:last-child').textContent = playing ? 'Pauzeer achtergrond' : 'Speel achtergrond';
+    videoToggle.querySelector('.video-play').toggleAttribute('hidden', playing);
+    videoToggle.querySelector('.video-pause').toggleAttribute('hidden', !playing);
+    videoToggle.querySelector('.video-label').textContent = playing ? 'Pauzeer achtergrond' : 'Speel achtergrond';
     videoToggle.setAttribute('aria-label', playing ? 'Pauzeer achtergrondvideo' : 'Speel achtergrondvideo');
   };
   async function playBackground() {
