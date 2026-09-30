@@ -1,0 +1,14 @@
+import { test, before, after } from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, writeFile, symlink, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import http from 'node:http';
+import { createServer } from '../server.mjs';
+let server, base, root;
+before(async () => { root = await mkdtemp(path.join(tmpdir(), 'vprod-')); await writeFile(path.join(root,'index.html'), '<h1>V Production</h1>'); await writeFile(path.join(root,'clip.mp4'), '0123456789'); await writeFile(path.join(root,'.env'), 'SECRET'); await symlink('/etc/hosts', path.join(root,'outside.txt')); server = createServer(root); await new Promise(resolve => server.listen(0,'127.0.0.1',resolve)); base = `http://127.0.0.1:${server.address().port}`; });
+after(async () => { await new Promise(resolve => server.close(resolve)); await rm(root,{recursive:true,force:true}); });
+test('serves public HTML with restrictive headers', async () => { const res = await fetch(base); assert.equal(res.status,200); assert.match(await res.text(),/V Production/); assert.match(res.headers.get('content-security-policy'),/frame-ancestors 'none'/); assert.equal(res.headers.get('x-content-type-options'),'nosniff'); });
+test('video byte ranges support seeking, open ends, suffixes and HEAD', async () => { for (const [range, expected] of [['bytes=2-5','2345'],['bytes=7-','789'],['bytes=-3','789']]) { const res = await fetch(base+'/clip.mp4',{headers:{Range:range}}); assert.equal(res.status,206); assert.equal(await res.text(),expected); } const head = await fetch(base+'/clip.mp4',{method:'HEAD'}); assert.equal(head.headers.get('content-length'),'10'); assert.equal(await head.text(),''); });
+test('rejects invalid ranges and unsupported methods', async () => { for (const range of ['bytes=99-100','bytes=-0','bytes=5-2','bytes=0-1,5-6']) { const res = await fetch(base+'/clip.mp4',{headers:{Range:range}}); assert.equal(res.status,416); } assert.equal((await fetch(base,{method:'POST'})).status,405); });
+test('does not serve secrets, directory traversal or symlinks outside public', async () => { for (const target of ['/.env','/%2eenv','/%2e%2e/server.mjs','/outside.txt','/package.json','/%00','/%zz']) { const status = await new Promise((resolve,reject) => { const req=http.get(base+target,res=>{res.resume();resolve(res.statusCode)});req.on('error',reject); }); assert.ok([400,404].includes(status),`${target}: ${status}`); } });
