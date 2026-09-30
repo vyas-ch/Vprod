@@ -26,5 +26,6 @@ jobs:
         run: |
           git archive --format=tar HEAD public > /tmp/vprod-public.tar
           python3 ops/auto-deploy.py --validate /tmp/vprod-public.tar
-          bash -n ops/setup-vps.sh ops/deploy-vps.sh ops/install-auto-deploy.sh
-
+          bash -n ops/setup-vps.sh ops/deploy-vps.sh ops/install-auto-deploy.sh ops/setup-mail.sh ops/mail-backup.sh
+          sh -n ops/mail/renew-hook.sh
+          python3 -m py_compile ops/mail-health.py ops/mail/verify-local.py ops/mail/verify-relay.py
