@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="audio-glass" x1="23" y1="7" x2="39" y2="39" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B9F0FF" stop-opacity=".23"/>
+      <stop offset="1" stop-color="#009EDB" stop-opacity=".08"/>
+    </linearGradient>
+    <linearGradient id="audio-edge" x1="23" y1="8" x2="41" y2="41" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DBF8FF"/>
+      <stop offset="1" stop-color="#20BFF2"/>
+    </linearGradient>
+  </defs>
+  <path d="M16 29v4a16 16 0 0 0 32 0v-4" stroke="#20BFF2" stroke-width="2" stroke-linecap="round"/>
+  <rect x="23" y="7" width="18" height="34" rx="9" fill="url(#audio-glass)" stroke="url(#audio-edge)" stroke-width="2"/>
+  <path d="M29 16h6m-6 6h6m-6 6h6" stroke="#DFF9FF" stroke-opacity=".85" stroke-width="2" stroke-linecap="round"/>
+  <path d="M32 49v8m-8 0h16" stroke="#B9F0FF" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 23v14m48-14v14" stroke="#20BFF2" stroke-opacity=".65" stroke-width="2" stroke-linecap="round"/>
+  <path d="M3 28v4m58-4v4" stroke="#B9F0FF" stroke-opacity=".4" stroke-width="2" stroke-linecap="round"/>
+</svg>

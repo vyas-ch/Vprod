@@ -3,11 +3,10 @@ const heroVideo = document.querySelector('#hero-video');
 const videoToggle = document.querySelector('#video-toggle');
 if (heroVideo && videoToggle && /^\/assets\/[a-zA-Z0-9._-]+\.mp4$/.test(rootConfig.heroVideo || '')) {
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const smallScreen = matchMedia('(max-width: 767px)');
   let userPaused = false;
   let userStarted = false;
   let inView = true;
-  const automatic = () => !reduceMotion.matches && !smallScreen.matches && !navigator.connection?.saveData;
+  const automatic = () => !reduceMotion.matches && !navigator.connection?.saveData;
   const updateButton = () => {
     const playing = !heroVideo.paused;
     videoToggle.querySelector('span:first-child').textContent = playing ? 'Ⅱ' : '▶';
@@ -15,8 +14,9 @@ if (heroVideo && videoToggle && /^\/assets\/[a-zA-Z0-9._-]+\.mp4$/.test(rootConf
     videoToggle.setAttribute('aria-label', playing ? 'Pauzeer achtergrondvideo' : 'Speel achtergrondvideo');
   };
   async function playBackground() {
-    if (!heroVideo.getAttribute('src')) heroVideo.src = rootConfig.heroVideo;
     heroVideo.muted = true;
+    heroVideo.autoplay = true;
+    if (!heroVideo.getAttribute('src')) heroVideo.src = rootConfig.heroVideo;
     try { await heroVideo.play(); } catch { updateButton(); }
   }
   function syncPlayback() {
@@ -33,7 +33,6 @@ if (heroVideo && videoToggle && /^\/assets\/[a-zA-Z0-9._-]+\.mp4$/.test(rootConf
   heroVideo.addEventListener('error', () => { heroVideo.classList.remove('is-playing'); videoToggle.hidden = true; });
   document.addEventListener('visibilitychange', syncPlayback);
   reduceMotion.addEventListener('change', () => { userStarted = false; syncPlayback(); });
-  smallScreen.addEventListener('change', syncPlayback);
   new IntersectionObserver(entries => { inView = entries[0].isIntersecting; syncPlayback(); }, { threshold:0.05 }).observe(heroVideo.closest('.hero'));
   updateButton();
 }
