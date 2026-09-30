@@ -12,7 +12,7 @@ npm test
 npm run check
 ```
 
-Preview: http://127.0.0.1:4173. De server luistert standaard alleen lokaal; gebruik een TLS reverse proxy voor productie.
+Preview: http://127.0.0.1:4173. De Node-server luistert standaard alleen lokaal. De publieke site is volledig statisch; de VPS gebruikt hiervoor Nginx.
 
 ## Content en video
 
