@@ -1,0 +1,25 @@
+[Unit]
+Description=Deploy V Production after successful GitHub Actions checks
+After=network-online.target nginx.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=vprod-deploy
+Group=vprod-deploy
+ExecStart=/usr/bin/python3 /usr/local/libexec/vprod-auto-deploy.py
+TimeoutStartSec=240
+MemoryMax=512M
+UMask=0022
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+CapabilityBoundingSet=
+ReadWritePaths=/srv/vprod /var/lib/vprod-deploy
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6

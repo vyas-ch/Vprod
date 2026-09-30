@@ -11,3 +11,5 @@ test-results/
 coverage/
 private/
 backups/
+__pycache__/
+*.pyc

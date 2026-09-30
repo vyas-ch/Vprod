@@ -1,0 +1,12 @@
+[Unit]
+Description=Check GitHub for a tested V Production update every minute
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+AccuracySec=5s
+Unit=vprod-deploy.service
+
+[Install]
+WantedBy=timers.target
+

@@ -27,3 +27,7 @@ Preview: http://127.0.0.1:4173. De Node-server luistert standaard alleen lokaal.
 De eerste versie is op 30 september 2026 gepubliceerd als HTTP-preview op de VPS. De domeinen, HTTPS en publieke contactgegevens worden nog afgerond. De repository bevat geen sleutels of omgevingsgeheimen. De statische server publiceert uitsluitend de map `public`. De serverstatus en publieke controles bepalen welke commit daadwerkelijk draait.
 
 Zie `ops/DEPLOY.md` voor de voorbereide serveraanpak. Deploy alleen een geteste commit. Gebruik een aparte releasefolder, bewaar de vorige release en wijzig alleen de V Production-service.
+
+## Automatische updates
+
+Codex zet wijzigingen in GitHub. De workflow `Website checks` controleert de code, videostreaming en veilige releasebestanden. De VPS controleert iedere minuut of de nieuwste commit op `main` deze controles heeft doorstaan. Alleen dan activeert hij de publieke bestanden, met controle en automatisch herstel bij een fout. Hiervoor zijn geen serverwachtwoord, SSH-privésleutel of GitHub-token op de VPS nodig. De eenmalige installatie van Nginx, HTTPS en de deployservice vereist wel beheerdersrechten. Zie `ops/DEPLOY.md` voor de installatie en statuscontrole.
