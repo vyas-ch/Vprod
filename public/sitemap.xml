@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://vprod.nl/</loc></url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://vprod.nl/</loc></url>
+  <url><loc>https://vprod.nl/vjobs.html</loc></url>
+  <url><loc>https://vprod.nl/vjobs-vproduction.html</loc></url>
+</urlset>

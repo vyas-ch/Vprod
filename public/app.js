@@ -40,7 +40,7 @@ if (heroVideo && videoToggle && /^\/assets\/[a-zA-Z0-9._-]+\.mp4$/.test(rootConf
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#main-nav');
 function closeMenu() { menuButton?.setAttribute('aria-expanded', 'false'); navigation?.classList.remove('is-open'); }
-menuButton?.addEventListener('click', () => { const open = menuButton.getAttribute('aria-expanded') !== 'true'; menuButton.setAttribute('aria-expanded', String(open)); navigation.classList.toggle('is-open', open); });
+menuButton?.addEventListener('click', () => { const open = menuButton.getAttribute('aria-expanded') !== 'true'; menuButton.setAttribute('aria-expanded', String(open)); navigation?.classList.toggle('is-open', open); });
 navigation?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') {
@@ -52,13 +52,6 @@ document.addEventListener('keydown', event => {
 document.addEventListener('pointerdown', event => {
   if (menuButton?.getAttribute('aria-expanded') === 'true' && !menuButton.contains(event.target) && !navigation?.contains(event.target)) closeMenu();
 });
-document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
-  const category = button.dataset.filter;
-  document.querySelectorAll('[data-filter]').forEach(item => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-pressed', String(active)); });
-  let visible = 0;
-  document.querySelectorAll('[data-category]').forEach(card => { card.hidden = category !== 'Alles' && card.dataset.category !== category; if (!card.hidden) visible++; });
-  document.querySelector('#filter-status').textContent = `${visible} ${visible === 1 ? 'mogelijkheid' : 'mogelijkheden'}${category === 'Alles' ? '' : ` voor ${category}`}`;
-}));
 document.querySelectorAll('[data-service]').forEach(link => link.addEventListener('click', () => {
   document.querySelectorAll('input[name="service"]').forEach(input => { input.checked = input.value === link.dataset.service; });
 }));
@@ -66,11 +59,21 @@ const email = typeof rootConfig.contactEmail === 'string' && /^[^\s@<>]+@[^\s@<>
 document.querySelectorAll('[data-contact-email]').forEach(link => { if (email) { link.textContent = email; link.href = `mailto:${email}`; link.hidden = false; } });
 const phone = typeof rootConfig.phone === 'string' ? rootConfig.phone : '';
 document.querySelectorAll('[data-contact-phone]').forEach(link => { if (phone) { link.textContent = phone; link.href = `tel:${phone.replace(/[^+\d]/g, '')}`; link.hidden = false; } });
-if (email) document.querySelector('#contact-fallback')?.setAttribute('hidden', '');
-document.querySelector('#year').textContent = new Date().getFullYear();
+if (email) {
+  document.querySelector('#contact-fallback')?.setAttribute('hidden', '');
+  document.querySelector('#contact-pending')?.setAttribute('hidden', '');
+  const intro = document.querySelector('#intake-description');
+  if (intro) intro.textContent = 'Een uitgewerkt plan of alleen een eerste idee? Vertel het ons. We denken met je mee.';
+  const help = document.querySelector('#request-help');
+  if (help) help.textContent = 'Je aanvraag wordt voorbereid als e-mail. Je controleert en verstuurt die zelf via je e-mailprogramma.';
+  const submit = document.querySelector('#request-submit');
+  if (submit) submit.firstChild.textContent = 'Bereid aanvraag voor ';
+}
+const year = document.querySelector('#year');
+if (year) year.textContent = new Date().getFullYear();
 const form = document.querySelector('#project-form');
 const dialog = document.querySelector('#request-dialog');
-form?.addEventListener('submit', event => {
+if (form && dialog) form.addEventListener('submit', event => {
   event.preventDefault();
   if (!form.reportValidity()) return;
   const data = new FormData(form);
@@ -78,7 +81,10 @@ form?.addEventListener('submit', event => {
   if (!services.length) { document.querySelector('#form-status').textContent = 'Kies minimaal één dienst: IT, video of audio.'; document.querySelector('input[name="service"]').focus(); return; }
   document.querySelector('#form-status').textContent = '';
   const subject = `Projectaanvraag — ${services.join(', ')}`;
-  const body = `Hallo V Production,\n\nIk wil graag een project bespreken.\n\nDiensten: ${services.join(', ')}\nNaam: ${String(data.get('name')).trim()}\nE-mailadres: ${String(data.get('email')).trim()}\n\nMijn idee:\n${String(data.get('message')).trim()}\n\nMet vriendelijke groet,\n${String(data.get('name')).trim()}`;
+  const name = String(data.get('name') || '').trim();
+  const senderEmail = String(data.get('email') || '').trim();
+  const details = [`Diensten: ${services.join(', ')}`, name ? `Naam: ${name}` : '', senderEmail ? `E-mailadres: ${senderEmail}` : ''].filter(Boolean).join('\n');
+  const body = `Hallo V Production,\n\nIk wil graag een project bespreken.\n\n${details}\n\nMijn idee:\n${String(data.get('message') || '').trim()}${name ? `\n\nMet vriendelijke groet,\n${name}` : ''}`;
   document.querySelector('#request-draft').value = body;
   document.querySelector('#copy-status').textContent = '';
   const mailLink = document.querySelector('#email-request');

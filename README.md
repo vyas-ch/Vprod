@@ -1,6 +1,6 @@
 # V Production
 
-Nederlandse website op basis van het gekozen filmische concept. Bevat het bestaande logo in drie horizontale blokken, IT/video/audio-diensten, een filter, mobiel menu en een projectplanner.
+Nederlandse website op basis van het gekozen filmische concept. Bevat het goedgekeurde logo met de onderregel onder het woordmerk, een inklapbaar menu, IT/video/audio-diensten, Vjobs, een werkwijze, een introductie, veelgestelde vragen en een projectplanner.
 
 ## Lokaal
 
@@ -17,10 +17,18 @@ Preview: http://127.0.0.1:4173. De Node-server luistert standaard alleen lokaal.
 ## Content en video
 
 - Publieke contactgegevens staan in `public/site-config.js`. E-mailadres en telefoon zijn nog niet aangeleverd. De projectplanner maakt daarom nu een kopieerbaar concept. Er wordt niets automatisch verzonden.
-- De Higgsfield-montage in `public/assets/vprod-montage.mp4` toont radio, podcast, film, IT en websites (15 seconden, 1920×1080, 24 fps, zonder geluid). De webversie is circa 4 MB. De video heeft een pauzeknop en laadt pas op verzoek bij een klein scherm, databesparing of verminderde beweging.
+- De Higgsfield-montage in `public/assets/vprod-montage.mp4` toont radio, podcast, film, IT en websites (15 seconden, 1920×1080, 24 fps, zonder geluid). De webversie is circa 4 MB. De video heeft een pauzeknop en laadt pas op verzoek bij databesparing of verminderde beweging. Op mobiel start de video automatisch als de browser dit toestaat.
 - De montage en sfeerbeelden zijn gegenereerd met Higgsfield en ImageGen. Ze stellen geen bestaand klantportfolio of eigen studio voor.
 - Het logo is overgenomen uit de goedgekeurde SVG-assets in navy/cyaan.
 - Hoofdadres: `https://vprod.nl`; `vproduction.nl` en beide www-adressen verwijzen hierheen.
+
+## Vjobs en inhoud
+
+- `/vjobs.html` is het portfolio. De filters Alles / IT / Video / Audio werken zonder externe diensten. Zonder JavaScript blijven de projecten zichtbaar.
+- `/vjobs-vproduction.html` beschrijft de eigen website als **eigen project**, niet als klantreferentie. Er zijn nog geen klantcases bevestigd.
+- Voeg alleen echte projecten toe waarvan de naam, rol, resultaten en publicatie van media bevestigd zijn. De sfeerbeelden bij diensten zijn geen klantprojecten of foto’s van een eigen studio.
+- De homepage bevat uitgebreidere diensten, afspraken over nazorg, merkintroductie en een FAQ. Persoonlijke biografie, teamfoto’s, prijzen en klantbeoordelingen ontbreken totdat die zijn aangeleverd.
+- Zolang het contactadres leeg is, vermeldt de planner vóór de velden dat er niets wordt verstuurd. Naam en e-mail zijn optioneel. Met een bevestigd adres in `site-config.js` worden de directe e-maillink en de e-mailknop bij het concept beschikbaar. Er is geen server die het formulier verstuurt.
 
 ## Publicatie
 
