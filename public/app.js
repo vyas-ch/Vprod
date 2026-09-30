@@ -42,7 +42,16 @@ const navigation = document.querySelector('#main-nav');
 function closeMenu() { menuButton?.setAttribute('aria-expanded', 'false'); navigation?.classList.remove('is-open'); }
 menuButton?.addEventListener('click', () => { const open = menuButton.getAttribute('aria-expanded') !== 'true'; menuButton.setAttribute('aria-expanded', String(open)); navigation.classList.toggle('is-open', open); });
 navigation?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') {
+    const focusInMenu = navigation?.contains(document.activeElement);
+    closeMenu();
+    if (focusInMenu) menuButton.focus();
+  }
+});
+document.addEventListener('pointerdown', event => {
+  if (menuButton?.getAttribute('aria-expanded') === 'true' && !menuButton.contains(event.target) && !navigation?.contains(event.target)) closeMenu();
+});
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   const category = button.dataset.filter;
   document.querySelectorAll('[data-filter]').forEach(item => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-pressed', String(active)); });
