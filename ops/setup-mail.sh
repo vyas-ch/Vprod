@@ -7,11 +7,11 @@ umask 077
 [[ $# == 1 && $1 =~ ^[a-zA-Z0-9._+-]+@vps\.transip\.email$ ]] || exit 2
 relay_user=$1
 source_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-[[ $(hostname) == vyas-vps2 ]] || { printf 'Verkeerde VPS.\n' >&2; exit 1; }
+/bin/bash "$source_dir/mail/verify-target.sh"
 [[ -f /etc/os-release ]] && . /etc/os-release
 [[ ${ID:-} == ubuntu && ${VERSION_ID:-} == 26.04 ]] || exit 1
 [[ ! -e /var/lib/vprod-mail/installed.json ]] || { printf 'Mail is al ingericht; gebruik gericht onderhoud.\n' >&2; exit 1; }
-for service in postfix dovecot rspamd; do
+for service in postfix dovecot dovecot-core rspamd; do
   if dpkg-query -W -f='${Status}' "$service" 2>/dev/null | grep -q 'install ok installed'; then
     printf 'Bestaand pakket %s gevonden: eerst inspecteren.\n' "$service" >&2; exit 1
   fi
